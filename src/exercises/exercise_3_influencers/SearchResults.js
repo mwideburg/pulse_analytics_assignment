@@ -1,9 +1,8 @@
 import React from 'react'
-
+import SingleResult from './SingleResult'
 
 const SerachResults = ({data, sort}) => {
-
-    
+    // if sort is active then we sort the data based on priority
     if(sort){
         let priority = {
             'High': [],
@@ -27,55 +26,28 @@ const SerachResults = ({data, sort}) => {
         })
         let sorted = Object.values(priority)
         let res = []
+
+        // rebuild data array
+
         sorted.forEach(arr => {
             res.push(...arr)
         })
         data = res
     }
+
+    // Map data for each result in search
+
+    let key = 0
     const result = data.map(objData => {
-        let member = objData['member']
-        let influencerType = objData["influencerType"]
-        let category = objData["indicationCategory"]
-        let affiliation = objData["affiliation"]
-        let position = objData["affiliationPosition"]
-        let state = objData['primaryState']
-        let priority = objData['priority']
+        key++
         return(
-            <li>
-            <div className="info-container">
-                <div className="member-priority">
-                    <p>
-                    Member: <b>{member}</b>
-                    </p>
-                    Priority : {priority}
-                    
-                </div>
-                <div className="member-data">
-                    <ul>
-                        <li>
-                        Title : {position}
-                        </li>
-                        <li>
-                        State : {state}
-                        </li>
-                        <li>
-                        Type : {influencerType}
-                        </li>
-                        <li>
-                        Category : {category}
-                        </li>
-                        <li>
-                        Affiliation : {affiliation}
-                        </li>
-                        
-                    </ul>
-                </div>
-                
-                
-            </div>
+            <li key={key}>
+                <SingleResult objData={objData}/>
             </li>
         )
     })
+
+
     return(
         <div className="result-container">
             <ul>
